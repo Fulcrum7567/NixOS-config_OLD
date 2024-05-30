@@ -1,0 +1,9 @@
+{ ... }:
+
+{
+ imports = [
+  ../global/home.nix
+ ];
+
+
+}

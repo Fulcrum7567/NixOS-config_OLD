@@ -7,8 +7,14 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      (./. + "../../../../../devices/" + ("/"+(currentDevice) + "/") + "/hardware/hardware-configuration.nix") # load hardware configuration for current device
+      (./. + "../../../../../devices/" + ("/"+(currentDevice) + "/") + "/configuration.nix") # load hardware configuration for current device
     ];
+    
+  # ensure nix flakes are enabled
+#  nix.package = pkgs.nixFlakes;
+#  nix.extraOptions = ''
+#   experimental-features = nix-command flakes
+#  '';
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -42,21 +48,7 @@
     LC_TIME = "de_DE.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
 
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "de";
-    variant = "";
-  };
-
-  # Configure console keymap
-  console.keyMap = "de";
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -86,9 +78,7 @@
     isNormalUser = true;
     description = "Fulcrum";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-    #  thunderbird
-    ];
+    packages = [];
   };
 
 

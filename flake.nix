@@ -19,7 +19,8 @@
   let
   
    currentDevice = "PET";
-   currentProfile = "personal";
+   currentProfileType = "personal";
+   currentProfile = "personal1";
    currentUser = "fulcrum";
    system = "x86_64-linux";
    
@@ -34,7 +35,7 @@
   nixosConfigurations = {
    system = lib.nixosSystem {
     inherit system;
-    modules = [ (./. + "/users/" + ("/"+(currentUser)) + "/profiles/" + ("/"+(currentProfile)) + "/configuration.nix") ];
+    modules = [ (./. + "/users/" + ("/"+(currentUser)) + "/profiles/" + ("/"+(currentProfileType)) + "/" + ("/"+(currentProfile)) + "/configuration.nix") ];
     specialArgs = {
      inherit currentDevice;
     };
@@ -45,7 +46,10 @@
   homeConfigurations = {
    user = home-manager.lib.homeManagerConfiguration {
     inherit pkgs; 
-    modules = [ (./. + "/users/" + ("/"+(currentUser)) + "/profiles/" + ("/"+(currentProfile)) + "/home.nix")  ];
+    modules = [ (./. + "/users/" + ("/"+(currentUser)) + "/profiles/" + ("/"+(currentProfileType)) + "/" + ("/"+(currentProfile)) + "/home.nix")  ];
+   };
+   specialArgs = {
+    inherit currentDevice;
    };
   };
  };

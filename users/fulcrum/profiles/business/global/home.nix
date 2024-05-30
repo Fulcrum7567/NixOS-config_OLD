@@ -1,6 +1,9 @@
 { ... }:
+
 {
  imports = [
-  ../global/configuration.nix
+  ../../global/home.nix
  ];
+
+
 }

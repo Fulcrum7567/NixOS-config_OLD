@@ -1,0 +1,6 @@
+{ ... }:
+{
+ imports = [
+  ../global/privateGlobalConf.nix
+ ];
+}

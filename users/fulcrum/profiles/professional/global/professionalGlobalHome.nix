@@ -1,0 +1,9 @@
+{ ... }:
+
+{
+ imports = [
+  ../../global/profileGlobalHome.nix
+ ];
+
+
+}

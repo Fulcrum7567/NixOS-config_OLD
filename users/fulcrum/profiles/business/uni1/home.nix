@@ -1,9 +1,0 @@
-{ ... }:
-
-{
- imports = [
-  ../global/home.nix
- ];
-
-
-}

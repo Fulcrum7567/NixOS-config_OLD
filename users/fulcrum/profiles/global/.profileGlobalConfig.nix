@@ -2,12 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, currentDevice, ... }:
+{ config, pkgs, lib, currentDevice, deviceSettings, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
-      ../../../../devices/${currentDevice}/deviceConfig.nix
+      ( import ../../../../devices/${currentDevice}/.deviceConfig.nix {inherit config pkgs lib currentDevice deviceSettings;} )
     ];
 
   # Bootloader.

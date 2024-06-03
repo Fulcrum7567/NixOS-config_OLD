@@ -34,9 +34,10 @@
   nixosConfigurations = {
    system = lib.nixosSystem {
     system = deviceSettings.system;
-    modules = [ (./users/${deviceSettings.user}/profiles/${deviceSettings.profileType}/${deviceSettings.profile}/configuration.nix) ];
+    modules = [ (./users/${deviceSettings.user}/profiles/${deviceSettings.profileType}/${deviceSettings.profile}/.configuration.nix) ];
     specialArgs = {
      inherit currentDevice;
+     inherit deviceSettings;
     };
    };
   };
@@ -46,7 +47,7 @@
   homeConfigurations = {
    user = home-manager.lib.homeManagerConfiguration {
     inherit pkgs; 
-    modules = [ (./users/${deviceSettings.user}/profiles/${deviceSettings.profileType}/${deviceSettings.profile}/home.nix) ];
+    modules = [ (./users/${deviceSettings.user}/profiles/${deviceSettings.profileType}/${deviceSettings.profile}/.home.nix) ];
     extraSpecialArgs = {
      inherit currentDevice;
      inherit deviceSettings;

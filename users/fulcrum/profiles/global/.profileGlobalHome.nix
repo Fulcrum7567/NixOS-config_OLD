@@ -1,24 +1,16 @@
-{ config, pkgs, deviceSettings, profileUserSettings, ... }:
+{ config, pkgs, currentDevice, deviceSettings, profileUserSettings, ... }:
 let
- # --- User Settings --- #
- # these are getting overwritten by the profile setting if not set to null
- 
- userSettings = {
-  wm = "gnome";
- };
- 
- 
- # DON'T CHANGE THIS (unless you want to add a variable to be passed on)
- userSettingsFinal = {
-  wm = if (profileUserSettings.wm == null) then userSettings.wm else profileUserSettings.wm;
- };
+
+ userSettingsFile = ( import ./profileGlobalUserSettings.nix {inherit config pkgs lib currentDevice deviceSettings profileUserSettings;} );
+ userSettings = userSettingsFile.userSettingsFinal;
 
 
 in
 {
 
  imports = [
-  ( ../../wm/${userSettingsFinal.wm}/${userSettingsFinal.wm}Home.nix )
+  ( import ./profileGlobalApps.nix { inherit config pkgs lib currentDevice deviceSettings; profileUserSettings = userSettings;} )
+  ( ../../wm/${userSettings.wm}/${userSettings.wm}Home.nix )
   ../../apps/git/git.nix
  ];
 

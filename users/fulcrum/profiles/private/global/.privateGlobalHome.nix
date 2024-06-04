@@ -1,22 +1,14 @@
-{ config, pkgs, deviceSettings, profileUserSettings, ... }:
+{ config, pkgs, lib, currentDevice, deviceSettings, profileUserSettings, ... }:
 let
- # --- User Settings --- #
- # these are getting overwritten by the profile setting if not set to null
  
- userSettings = {
-  wm = null;
- };
- 
- 
- # DON'T CHANGE THIS (unless you want to add a variable to be passed on)
- userSettingsFinal = {
-  wm = if (profileUserSettings.wm == null) then userSettings.wm else profileUserSettings.wm;
- };
+ userSettingsFile = ( import ./privateGlobalUserSettings.nix {inherit config pkgs lib currentDevice deviceSettings profileUserSettings;} );
+ userSettings = userSettingsFile.userSettingsFinal;
 
 in
 {
  imports = [
-  ( import ../../global/profileGlobalHome.nix {inherit config; inherit pkgs; inherit deviceSettings; profileUserSettings = userSettingsFinal;} )
+  ( import ./privateGlobalApps.nix { inherit config pkgs lib currentDevice deviceSettings; profileUserSettings = userSettings;} )
+  ( import ../../global/.profileGlobalHome.nix {inherit config pkgslib currentDevice deviceSettings; profileUserSettings = userSettings;} )
   
  ];
 

@@ -1,4 +1,4 @@
-{ config, pkgs, currentDevice, deviceSettings, profileUserSettings, ... }:
+{ config, pkgs, lib, currentDevice, deviceSettings, profileUserSettings, ... }:
 let
 
  userSettingsFile = ( import ./profileGlobalUserSettings.nix {inherit config pkgs lib currentDevice deviceSettings profileUserSettings;} );
@@ -14,6 +14,7 @@ in
   ../../apps/git/git.nix
  ];
 
+  systemd.user.startServices = true;
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.

@@ -3,7 +3,8 @@
 {
 
  # use dconf watch /
- dconf.settings = {
+ dconf.settings = {    
+   
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
       enable-hot-corners = false;
@@ -17,6 +18,8 @@
      "org/gnome/desktop/peripherals/touchpad" = {
       tap-to-click = true;
      };
+     
+     
   };
   
 

@@ -1,4 +1,4 @@
-system = "x86_64-linux";
-user = "fulcrum";
-profileType = "private";
-profile = "private1";
+system = x86_64-linux
+user = fulcrum
+profileType = private
+profile = private1

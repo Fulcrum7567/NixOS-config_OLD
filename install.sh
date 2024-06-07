@@ -37,10 +37,33 @@ then
 else if [ $? == 1 ];
 then
  echo device "$device" unknown, creating new one...
+ sh ./system/scripts/createNewDevice.sh $device	
+ echo "setting $device as current device..."
+ sed -i 's/"[^"]*"/"'$device'"/g' ./devices/currentDevice.nix
  
- grep -F "nixpkgs.hostPlatform = lib.mkDefault" ./hardware-configuration.nix | grep -oP '(?<=")[^"]*(?=")'
-else
- echo there was an error checking your device...
- echo aborting...
- exit -1
+ # grep -F "nixpkgs.hostPlatform = lib.mkDefault" ./hardware-configuration.nix | grep -oP '(?<=")[^"]*(?=")'
+ else
+  echo there was an error checking your device...
+  echo aborting...
+  exit -1
+ fi
 fi
+
+echo rebuilding system...
+sh ./system/scripts/rebuildSystem.sh
+
+if [ $? != 0 ];
+then
+ read -p "Please rebuild your system manually and then press enter to continue..."
+fi
+
+echo rebuilding home-manager
+nix run home-manager/master --extra-experimental-features nix-command --extra-experimental-features flakes -- switch --flake .#user
+
+if [ $? != 0 ];
+then
+ read -p "Please rebuild your home-manager manually and then press enter to continue..."
+fi
+
+echo installer done!
+exit 0

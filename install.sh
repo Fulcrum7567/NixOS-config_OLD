@@ -39,6 +39,7 @@ then
  echo device "$device" unknown, creating new one...
  sh ./system/scripts/createNewDevice.sh $device	
  echo "setting $device as current device..."
+ cp ./system/templates/currentDevice.nix ./devices/.
  sed -i 's/"[^"]*"/"'$device'"/g' ./devices/currentDevice.nix
  
  # grep -F "nixpkgs.hostPlatform = lib.mkDefault" ./hardware-configuration.nix | grep -oP '(?<=")[^"]*(?=")'

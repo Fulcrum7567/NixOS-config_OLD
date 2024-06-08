@@ -28,7 +28,11 @@ else
  userInput=""
  while IFS= read -u 3 -r line; do
   setting=$( echo $line | grep -oP '[^ =]*' | head -n1)
-  value=$( echo $line | grep -oP '[^ =]*' | tail -n1)
+  if [ "$setting" == "system" ]; then
+   value=$( grep -F "nixpkgs.hostPlatform = lib.mkDefault" $SCRIPT_DIR/../../devices/$deviceName/hardware/hardware-configuration.nix | grep -oP '(?<=")[^"]*(?=")' )
+  else
+   value=$( echo $line | grep -oP '[^ =]*' | tail -n1)
+  fi
   read -p "What value do you want '$setting' to be? (default: $value) " userInput
   value=${userInput:-$value}
   echo "new value: $value"

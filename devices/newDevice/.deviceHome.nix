@@ -1,5 +1,0 @@
-{ config, pkgs, deviceSettings, profileUserSettings, ... }:
-
-{
-
-}

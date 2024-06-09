@@ -2,5 +2,5 @@
 # MUST NOT BE SYNCED!
 
 {
- currentDevice = "PET"; # Select, what device you're using rn. (A folder must exist with this name)
+ currentDevice = "NO_DEVICE_SELECTED"; # Select, what device you're using rn. (A folder must exist with this name)
 }

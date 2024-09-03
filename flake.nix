@@ -20,8 +20,7 @@
  let
   currentDeviceFile = import ./devices/currentDevice.nix;
   currentDevice = currentDeviceFile.currentDevice;
-  deviceSettingsFile = import (./devices/${currentDevice}/deviceSettings.nix);
-  deviceSettings = deviceSettingsFile.deviceSettings;
+  deviceSettings = import (./devices/${currentDevice}/deviceConfig.nix);
   
   
   lib = nixpkgs.lib;

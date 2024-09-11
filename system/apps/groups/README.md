@@ -1,1 +1,0 @@
-this Folder includes Groups of different apps one can incude in their System.

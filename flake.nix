@@ -9,7 +9,7 @@
   nixpkgs.url = "nixpkgs/nixos-23.11";
   
   # define home-manager:
-  home-manager.url = "github:nix-community/home-manager/release-23.11";
+  home-manager.url = "github:nix-community/home-manager/release-24.05";
   home-manager.inputs.nixpkgs.follows = "nixpkgs";
   
   
@@ -33,7 +33,7 @@
   nixosConfigurations = {
    system = lib.nixosSystem {
     system = deviceSettings.system;
-    modules = [ (./users/${deviceSettings.user}/deviceSettings/system/${currentDevice}.nix) ];
+    modules = [ (./users/${deviceSettings.user}/deviceSettings/${currentDevice}/configuration.nix) ];
     specialArgs = {
      inherit currentDevice;
      inherit deviceSettings;

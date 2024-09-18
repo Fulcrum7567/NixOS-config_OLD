@@ -6,7 +6,7 @@
  
  
   # define nixpkgs:
-  nixpkgs.url = "nixpkgs/nixos-23.11";
+  nixpkgs.url = "nixpkgs/nixos-24.05";
   
   # define home-manager:
   home-manager.url = "github:nix-community/home-manager/release-24.05";
@@ -21,6 +21,7 @@
   currentDeviceFile = import ./devices/currentDevice.nix;
   currentDevice = currentDeviceFile.currentDevice;
   deviceSettings = import (./devices/${currentDevice}/deviceConfig.nix);
+  deviceUserSettings = import (./users/${deviceSettings.user}/deviceSettings/${currentDevice}.nix);
   
   
   lib = nixpkgs.lib;
@@ -33,10 +34,13 @@
   nixosConfigurations = {
    system = lib.nixosSystem {
     system = deviceSettings.system;
-    modules = [ (./users/${deviceSettings.user}/deviceSettings/${currentDevice}/configuration.nix) ];
+    modules = [ 
+     ./devices/${currentDevice}/deviceConfigs/configuration.nix
+     ./users/${deviceSettings.user}/systemConfig.nix
+    ];
     specialArgs = {
      inherit currentDevice;
-     inherit deviceSettings;
+     inherit deviceUserSettings;
     };
    };
   };
@@ -46,10 +50,10 @@
   homeConfigurations = {
    user = home-manager.lib.homeManagerConfiguration {
     inherit pkgs; 
-    modules = [ (./users/${deviceSettings.user}/deviceSettings/home/${currentDevice}.nix) ];
+    modules = [ (./users/${deviceSettings.user}/homeConfig.nix) ];
     extraSpecialArgs = {
-     inherit currentDevice;
      inherit deviceSettings;
+     inherit deviceUserSettings;
     };
    };
   };

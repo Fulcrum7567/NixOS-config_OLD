@@ -42,6 +42,7 @@
      inherit currentDevice;
      inherit deviceUserSettings;
      inherit lib;
+     inherit pkgs;
     };
    };
   };

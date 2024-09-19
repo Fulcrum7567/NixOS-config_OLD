@@ -4,5 +4,8 @@
   kitty
   waybar
   rofi-wayland
+  swww
+  
+  gnome.nautilus
  ];
 }

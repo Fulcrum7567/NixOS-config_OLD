@@ -8,8 +8,8 @@
    # See https://wiki.hyprland.org/Configuring/Environment-variables/
    
    env = [
-    "XCURSOR_SIZE,35"
-    "HYPRCURSOR_SIZE,35"
+    "XCURSOR_SIZE,25"
+    "HYPRCURSOR_SIZE,25"
    ];
   };
 }

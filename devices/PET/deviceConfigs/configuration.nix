@@ -67,6 +67,7 @@
   # Configure console keymap
  # console.keyMap = "de";
 
+  
   # Enable CUPS to print documents.
  # services.printing.enable = true;
 
@@ -88,6 +89,7 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
+  
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.fulcrum = {

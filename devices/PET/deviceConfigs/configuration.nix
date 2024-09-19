@@ -87,7 +87,7 @@
  # };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.fulcrum = {
@@ -103,7 +103,7 @@
  # programs.firefox.enable = true;
 
   # Allow unfree packages
- # nixpkgs.config.allowUnfree = true;
+  # nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

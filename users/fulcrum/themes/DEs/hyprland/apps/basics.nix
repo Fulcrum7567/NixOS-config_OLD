@@ -1,10 +1,8 @@
-# HOME CONFIG
-
 { pkgs, ... }:
-
 {
  home.packages = with pkgs; [
-  discord
-  betterdiscordctl
+  kitty
+  waybar
+  rofi-wayland
  ];
 }

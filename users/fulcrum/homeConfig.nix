@@ -4,11 +4,13 @@
 {
 
  imports = [
-  ./themes/configs/${deviceUserSettings.theme}/homeConfig.nix
-  ./apps/${deviceUserSettings.appProfile}.nix
+  ( import ./themes/configs/${deviceUserSettings.theme}/homeConfig.nix { inherit pkgs; } )
+  ( import ./apps/${deviceUserSettings.appProfile}.nix { inherit pkgs; } )
  ];
 
   systemd.user.startServices = true;
+  
+  nixpkgs.config.allowUnfree = true;
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.

@@ -1,9 +1,9 @@
 # SYSTEM CONFIG
 
-{ deviceUserSettings, ... }:
+{ lib, deviceUserSettings, ... }:
 {
  imports = [
-  ./themes/configs/${deviceUserSettings.theme}/systemConfig.nix
+  ( import ./themes/configs/${deviceUserSettings.theme}/systemConfig.nix { inherit lib; } )
  ];
  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }

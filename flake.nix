@@ -19,7 +19,7 @@
  outputs = { self, nixpkgs, home-manager, ... }@inputs:
  let
   currentDeviceFile = import ./devices/currentDevice.nix;
-  currentDevice = currentDeviceFile.currentDevice;
+  currentDevice = "PET";#currentDeviceFile.currentDevice;
   deviceSettings = import (./devices/${currentDevice}/deviceConfig.nix);
   deviceUserSettings = import (./users/${deviceSettings.user}/deviceSettings/${currentDevice}.nix);
   
@@ -41,6 +41,7 @@
     specialArgs = {
      inherit currentDevice;
      inherit deviceUserSettings;
+     inherit lib;
     };
    };
   };

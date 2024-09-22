@@ -3,8 +3,10 @@
 { pkgs, ... }:
 {
  imports = [
-  ( import ./bin/discord/discord.nix { inherit pkgs; } )
-  ( import ./bin/git/git.nix { inherit pkgs; } )
-  ( import ./bin/neovim/neovim.nix { inherit pkgs; } )
+  ( import ./bin/discord.nix { inherit pkgs; } )
+  ( import ./bin/git.nix { inherit pkgs; } )
+  ( import ./bin/sublime.nix { inherit pkgs; } )
+  ( import ./bin/chrome.nix { inherit pkgs; } )
+  ( import ./bin/bitwarden.nix { inherit pkgs; } )
  ];
 }

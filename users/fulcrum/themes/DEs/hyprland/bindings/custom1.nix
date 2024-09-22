@@ -52,12 +52,14 @@
  	"$mainMod SHIFT, 0, movetoworkspace, 10"
  	
  	# Example special workspace (scratchpad)
-	"$mainMod, S, togglespecialworkspace, magic"
-	"$mainMod SHIFT, S, movetoworkspace, special:magic"
+	# "$mainMod, S, togglespecialworkspace, magic"
+	# "$mainMod SHIFT, S, movetoworkspace, special:magic"
 	
 	# Scroll through existing workspaces with mainMod + scroll
 	"$mainMod CTRL, right, workspace, e+1"
 	"$mainMod CTRL, left, workspace, e-1"
+	
+
    ];
    
    bindm = [

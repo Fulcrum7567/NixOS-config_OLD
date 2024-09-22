@@ -17,7 +17,9 @@
       ./../../../system/configs/services/printing.nix
       ./../../../system/configs/services/sound.nix
       ./../../../system/configs/services/apps.nix
+      ./../../../hardware/nvidia/hibernation.nix
     ];
+
 
   # Bootloader.
  # boot.loader.systemd-boot.enable = true;

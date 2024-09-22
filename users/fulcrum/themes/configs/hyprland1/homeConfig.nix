@@ -10,10 +10,10 @@
   ./../../DEs/hyprland/lookAndFeel/general/defaults.nix
   ./../../DEs/hyprland/lookAndFeel/decoration/custom1.nix
   ./../../DEs/hyprland/lookAndFeel/animations/custom1.nix
-  ./../../DEs/hyprland/lookAndFeel/miscellaneous/defaults.nix
-  ./../../DEs/hyprland/input/gestures/defaults.nix
+  ./../../DEs/hyprland/lookAndFeel/miscellaneous/custom1.nix
+  ./../../DEs/hyprland/input/gestures/custom1.nix
   ./../../DEs/hyprland/input/device/defaults.nix
-  ./../../DEs/hyprland/input/input/defaults.nix
+  ./../../DEs/hyprland/input/input/custom1.nix
   ( import ./../../DEs/hyprland/autostart/basics.nix { inherit pkgs; } )
  ];
  

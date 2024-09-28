@@ -64,7 +64,9 @@ if [ ! $no_new_config ]; then
 	fi
 fi
 
-if [ -d "$($path_to_dotfiles + "/hosts/" + $hostname)" ]; then
-	
+path_to_dotfiles="${path_to_dotfiles/#\~/$HOME}"
+
+if [ -d "$path_to_dotfiles/hosts/$hostname/" ]; then
+	echo "$hostname already exists."
 fi
 

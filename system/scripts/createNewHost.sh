@@ -4,6 +4,7 @@
 hostname=""
 no_new_config=false
 debug=false
+skip_confirm=false
 path_to_dotfiles="~/.dotfiles"
 
 # Function to display usage
@@ -36,6 +37,10 @@ while [[ "$#" -gt 0 ]]; do
       debug=true
       shift
       ;;
+	--skip-confirm)
+	  skip_confirm=true
+	  shift
+	  ;;
     *)
       echo "Unknown option: $1"
       usage
@@ -67,6 +72,16 @@ fi
 path_to_dotfiles="${path_to_dotfiles/#\~/$HOME}"
 
 if [ -d "$path_to_dotfiles/hosts/$hostname/" ]; then
-	echo "$hostname already exists."
+	confirm=false
+	if [ ! $skip_confirm ]; then
+		read -p "$hostname already exists. Do you want to continue? (y/n)" userInput
+		if [ $userInput = "y" ]; then confirm=true; fi	
+	else
+		confirm=true
+	if [ $confirm ]; then
+		echo confirmed.
+		
+	fi
+		
 fi
 

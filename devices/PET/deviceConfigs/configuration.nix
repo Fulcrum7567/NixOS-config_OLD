@@ -4,7 +4,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, currentDevice, ... }:
+{ config, pkgs, lib, currentDevice, ... }:
 
 {
   imports =
@@ -53,8 +53,25 @@
  #   LC_TIME = "de_DE.UTF-8";
  # };
 
+
+ nixpkgs.config.allowBroken = true;
+  nixpkgs.config.allowInsecure = true;
+
+  nixpkgs.config.permittedInsecurePackages = [
+    "openssl-1.1.1w"
+    "electron-25.9.0"
+  ];
+
   # Enable the X11 windowing system.
- # services.xserver.enable = true;
+  services.xserver.enable = lib.mkForce true;
+    services.xserver.libinput.enable = true;
+
+    services.xserver.displayManager.gdm.wayland = true;
+    
+    hardware.enableRedistributableFirmware = true;
+
+    boot.kernelPackages = pkgs.linuxPackages_latest;
+    #hardware.enableAllFirmware = true;
 
   # Enable the GNOME Desktop Environment.
  # services.xserver.displayManager.gdm.enable = true;
@@ -91,6 +108,8 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
+  # services.touchegg.enable = true;
+  #boot.blacklistedKernelModules = [ "elan_i2c" ];
   
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -107,7 +126,7 @@
  # programs.firefox.enable = true;
 
   # Allow unfree packages
-  # nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

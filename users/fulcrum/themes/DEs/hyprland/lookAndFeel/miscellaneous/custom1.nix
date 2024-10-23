@@ -5,7 +5,7 @@
    dwindle = {
     pseudotile = true; # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
     preserve_split = true; # You probably want this
-    no_gaps_when_only = true;
+    no_gaps_when_only = false;
    };
 
    # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more

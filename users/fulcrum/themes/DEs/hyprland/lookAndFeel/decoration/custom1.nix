@@ -7,7 +7,7 @@
 
     # Change transparency of focused and unfocused windows
     active_opacity = 1.0;
-    inactive_opacity = 1.0;
+    inactive_opacity = 0.5;
 
     drop_shadow = true;
     shadow_range = 4;

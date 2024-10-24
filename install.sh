@@ -4,7 +4,8 @@
 hostname=""
 no_new_config=false
 debug=false
-path_to_dotfiles="~/.dotfiles"
+path_to_dotfiles="$PWD"
+
 
 # Function to display usage
 usage() {
@@ -28,6 +29,15 @@ while [[ "$#" -gt 0 ]]; do
         usage
       fi
       ;;
+    --pathToDotfiles|-p)
+      if [ -n "$2" ]; then
+        path_to_dotfiles="$2"
+        shift 2
+      else
+        echo "Error: --pathToDotfiles (-p) requires a path."
+        usage
+      fi
+      ;;
     --no-new-config)
       no_new_config=true
       shift
@@ -43,6 +53,7 @@ while [[ "$#" -gt 0 ]]; do
   esac
 done
 
+
 # Debugging info if enabled
 if [ "$debug" = true ]; then
   echo "Debug mode enabled"
@@ -52,11 +63,11 @@ fi
 
 # Check if HOSTNAME is provided
 while [[ -z "$hostname" ]]; do
-  read "What is the name of your device? " $hostname
+  read -p "What is the name of your device? " hostname
 done
 
 # Create new configs
-if [ ! $no_new_config ]; then
+if [ "$no_new_config" = false ]; then
   sudo rm /etc/nixos/configuration.nix /etc/nixos/hardware-configuration.nix
   sudo nixos-generate-config
   if [ "$debug" = true ]; then
@@ -64,6 +75,6 @@ if [ ! $no_new_config ]; then
   fi
 fi
 
-if [ -d "$($path_to_dotfiles + "/hosts/" + $hostname)" ]; then
-  
+if [ -d "$path_to_dotfiles/hosts/$hostname" ]; then
+  echo "$path_to_dotfiles/hosts/$hostname"
 fi

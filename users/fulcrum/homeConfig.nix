@@ -26,6 +26,16 @@
   # release notes.
   home.stateVersion = "23.11"; # Please read the comment before changing.
 
+
+  home.pointerCursor = {
+    gtk.enable = true;
+    # x11.enable = true;
+    package = pkgs.bibata-cursors;
+    name = "Bibata-Modern-Classic";
+    size = 16;
+  };
+  
+
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [

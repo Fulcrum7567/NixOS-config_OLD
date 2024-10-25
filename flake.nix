@@ -1,109 +1,60 @@
 {
- description = "Flake of Fulcrum";
- 
- inputs = {
- 
- 
- 
-  # define nixpkgs:
-  nixpkgs.url = "nixpkgs/nixos-24.05";
-  
-  # define home-manager:
-  home-manager.url = "github:nix-community/home-manager/release-24.05";
-  home-manager.inputs.nixpkgs.follows = "nixpkgs";
-  
-  nix-ld.url = "github:Mic92/nix-ld";
-  # this line assume that you also have nixpkgs as an input
-  nix-ld.inputs.nixpkgs.follows = "nixpkgs";
-  
-  
- };
- 
- outputs = { self, nixpkgs, home-manager, nix-ld, ... }@inputs:
- let
-  currentDeviceFile = import ./devices/currentDevice.nix;
-  currentDevice = "PET";#currentDeviceFile.currentDevice;
-  deviceSettings = import (./devices/${currentDevice}/deviceConfig.nix);
-  deviceUserSettings = import (./users/${deviceSettings.user}/deviceSettings/${currentDevice}.nix);
-  
-  
-  lib = nixpkgs.lib;
-  
-  pkgs = (nixpkgs.legacyPackages.${deviceSettings.system});
-  
-  
-  # Function to generate a set based on supported systems:
-  forAllSystems = inputs.nixpkgs.lib.genAttrs supportedSystems;
+  description = "Flake of Fulcrum";
 
-  # Attribute set of nixpkgs for each system:
-  nixpkgsFor =
-	forAllSystems (system: import inputs.nixpkgs { inherit system; });
-
-  
-  
-
-  
- in
- {
-  # ----- SYSTEM CONFIGURATION ----- #
-  nixosConfigurations = {
-   system = lib.nixosSystem {
-    system = deviceSettings.system;
-    modules = [ 
-     ./devices/${currentDevice}/deviceConfigs/configuration.nix
-     ./users/${deviceSettings.user}/systemConfig.nix
-
-     nix-ld.nixosModules.nix-ld
-
-        # The module in this repository defines a new module under (programs.nix-ld.dev) instead of (programs.nix-ld)
-        # to not collide with the nixpkgs version.
-        { programs.nix-ld.dev.enable = true; }
-    ];
-    specialArgs = {
-     inherit currentDevice;
-     inherit deviceUserSettings;
-     inherit lib;
-     inherit pkgs;
-    };
-   };
+  inputs = {
+    nixpkgs.url = "nixpkgs/nixos-24.05";
+    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nix-ld.url = "github:Mic92/nix-ld";
+    nix-ld.inputs.nixpkgs.follows = "nixpkgs";
   };
-  
-  
-  # ----- HOME-MANAGER CONFIGURATION ----- #
-  homeConfigurations = {
-   user = home-manager.lib.homeManagerConfiguration {
-    inherit pkgs; 
-    modules = [ (./users/${deviceSettings.user}/homeConfig.nix) ];
-    extraSpecialArgs = {
-     inherit deviceSettings;
-     inherit deviceUserSettings;
-    };
-   };
-  };
-  
-  
-  packages = forAllSystems (system:
-        let pkgs = nixpkgsFor.${system};
-        in {
-          default = self.packages.${system}.install;
 
-          install = pkgs.writeShellApplication {
-            name = "install";
-            runtimeInputs = with pkgs; [ git ]; # I could make this fancier by adding other deps
-            text = ''${./install.sh} "$@"'';
-          };
-        });
+  outputs = { self, nixpkgs, home-manager, nix-ld, ... }@inputs:
+  let
+    currentDeviceFile = import ./devices/currentDevice.nix;
+    currentDevice = "PET";
+    deviceSettings = import (./devices/${currentDevice}/deviceConfig.nix);
+    deviceUserSettings = import (./users/${deviceSettings.user}/deviceSettings/${currentDevice}.nix);
 
-      apps = forAllSystems (system: {
-        default = self.apps.${system}.install;
+    lib = nixpkgs.lib;
+    pkgs = nixpkgs.legacyPackages.${deviceSettings.system};
 
-        install = {
-          type = "app";
-          program = "${self.packages.${system}.install}/bin/install";
+  in
+  {
+    # ----- SYSTEM CONFIGURATION ----- #
+    nixosConfigurations = {
+      system = lib.nixosSystem {
+        system = deviceSettings.system;
+        modules = [
+          ./devices/${currentDevice}/deviceConfigs/configuration.nix
+          ./users/${deviceSettings.user}/systemConfig.nix
+
+          nix-ld.nixosModules.nix-ld
+
+          { programs.nix-ld.dev.enable = true; }
+        ];
+        specialArgs = {
+          inherit currentDevice;
+          inherit deviceUserSettings;
+          inherit lib;
+          inherit pkgs;
         };
-      });
+      };
     };
 
- };
+    # Expose the system configuration as the default package
+    defaultPackage.${deviceSettings.system} = self.nixosConfigurations.system.config.system.build.toplevel;
 
+    # ----- HOME-MANAGER CONFIGURATION ----- #
+    homeConfigurations = {
+      user = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+        modules = [ ./users/${deviceSettings.user}/homeConfig.nix ];
+        extraSpecialArgs = {
+          inherit deviceSettings;
+          inherit deviceUserSettings;
+        };
+      };
+    };
+  };
 }

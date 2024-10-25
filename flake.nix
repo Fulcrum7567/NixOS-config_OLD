@@ -5,11 +5,9 @@
     nixpkgs.url = "nixpkgs/nixos-24.05";
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    nix-ld.url = "github:Mic92/nix-ld";
-    nix-ld.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, nix-ld, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, ... }@inputs:
   let
     currentDeviceFile = import ./devices/currentDevice.nix;
     currentDevice = "PET";
@@ -29,9 +27,6 @@
           ./devices/${currentDevice}/deviceConfigs/configuration.nix
           ./users/${deviceSettings.user}/systemConfig.nix
 
-          nix-ld.nixosModules.nix-ld
-
-          { programs.nix-ld.dev.enable = true; }
         ];
         specialArgs = {
           inherit currentDevice;

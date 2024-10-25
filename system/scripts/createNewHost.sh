@@ -5,7 +5,7 @@ hostname=""
 no_new_config=false
 debug=false
 skip_confirm=false
-path_to_dotfiles="~/.dotfiles"
+path_to_dotfiles="$PWD"/../../../
 
 # Function to display usage
 usage() {
@@ -80,7 +80,6 @@ while [[ -z "$hostname" ]]; do
 done
 
 
-path_to_dotfiles="${path_to_dotfiles/#\~/$HOME}"
 
 # check whether hostname already exists
 if [ -d "$path_to_dotfiles/hosts/$hostname/" ]; then

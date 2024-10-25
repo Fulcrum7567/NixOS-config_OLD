@@ -4,6 +4,7 @@
 hostname=""
 no_new_config=false
 debug=false
+no_warning=false
 path_to_dotfiles="$PWD"
 
 
@@ -46,6 +47,10 @@ while [[ "$#" -gt 0 ]]; do
       debug=true
       shift
       ;;
+	--noWarning|-w)
+	  no_warning=true
+	  shift
+	  ;;
     *)
       echo "Unknown option: $1"
       usage

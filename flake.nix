@@ -38,7 +38,7 @@
     };
 
     # Expose the system configuration as the default package
-    defaultPackage.${deviceSettings.system} = self.nixosConfigurations.system.config.system.build.toplevel;
+    defaultPackage."x86_64-linux" = self.nixosConfigurations.system.config.system.build.toplevel;
 
     # ----- HOME-MANAGER CONFIGURATION ----- #
     homeConfigurations = {

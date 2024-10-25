@@ -40,7 +40,7 @@ system_default=$(grep -oP 'nixpkgs\.hostPlatform = lib\.mkDefault "\K[^"]+' "$ha
 
 # Check if --username is provided, otherwise prompt for it
 if [[ -z "$username" ]]; then
-    username_default="default_user"
+    username_default="fulcrum"
     if [[ "$skip_confirm" != true ]]; then
         read -p "What value should user be? (default: ${username_default}): " username
     fi

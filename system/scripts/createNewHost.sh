@@ -17,6 +17,12 @@ usage() {
   exit 1
 }
 
+debugMsg() {
+	if [ "$debug" = true ]; then
+		echo "$1"
+	fi
+}
+
 get_confirmation() {
 	local prompt_message="$1"
 	while true; do
@@ -86,24 +92,22 @@ if [ -d "$path_to_dotfiles/hosts/$hostname/" ]; then
 	if [ "$skip_confirm" = false ]; then
 		get_confirmation "The Host $hostname already exists. Do you want to proceed?"
 		if [ "$?" = 1 ]; then
+			debugMsg "Cancelled by user..."
 			echo canceling...
 			exit -1
 		fi
 	fi
 else
 	cp -r "$path_to_dotfiles/system/scripts/presets/devices/hostName" "$path_to_dotfiles/hosts/$hostname"
-	if [ "$debug" = true ]; then
-		echo "copied files to '$path_to_dotfiles/hosts/$hostname'."
-	fi
+	debugMsg "copied files to '$path_to_dotfiles/hosts/$hostname'."
 fi
 
 # Create new configs
 if [ "$no_new_config" = false ]; then
 	sudo rm /etc/nixos/configuration.nix /etc/nixos/hardware-configuration.nix
 	sudo nixos-generate-config
-	if [ "$debug" = true ]; then
-		echo "created new config files"
-	fi
+	debugMsg "created new config files"
+	
 	cp -a "/etc/nixos/." "$path_to_dotfiles/hosts/$hostname"
 fi
 

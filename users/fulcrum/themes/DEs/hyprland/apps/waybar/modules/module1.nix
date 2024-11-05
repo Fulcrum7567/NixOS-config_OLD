@@ -18,7 +18,7 @@
    
    "battery" = {
   "bat" = "BAT2";
-  "interval" = 60;
+  "interval" = 0.1;
   "states" = {
     "warning" = 30;
     "critical" = 15;
@@ -28,5 +28,5 @@
   "max-length" = 25;
 };
   };
- };
+};
 }
